@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private Player player = null;
     private EnemyManager enemyManager = null;
+    private ItemManager itemManager = null;
     private UIManager uiManager = null;
 
     [SerializeField] private int score = 0;
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
         player = GetComponentInChildren<Player>();
         enemyManager
             = GetComponentInChildren<EnemyManager>();
+        itemManager
+            = GetComponentInChildren<ItemManager>();
         uiManager
             = GetComponentInChildren<UIManager>();
     }
@@ -23,6 +26,7 @@ public class GameManager : MonoBehaviour
     {
         player.Init(OnGameOver);
         enemyManager.Init(player, AddScore);
+        itemManager.Init();
         uiManager.Init();
     }
 
@@ -51,36 +55,36 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //°£´ÜÇÑ ½´ÆÃ°ÔÀÓ
+    //ê°„ë‹¨í•œ ìŠˆíŒ…ê²Œì„
 
     //Player, Enemy, Item
 
     //Player
-    //WASD·Î ¿òÁ÷ÀÏ ¼ö ÀÖ¾î¾ß ÇÔ
-    //¸¶¿ì½º·Î ÇÃ·¹ÀÌ¾î¸¦ È¸ÀüÇÒ ¼ö ÀÖ°Ô ÇØ¾ß ÇÔ
-    //¸¶¿ì½º ¿ŞÂÊ ¹öÆ° ´©¸£¸é,
-    //ÃÑ¿¡¼­ ÃÑ¾ËÀÌ ³ª°¡¾ß ÇÔ
-    //µ¥¹ÌÁö ¹Ş´Â ±â´Éµµ ÇÊ¿äÇÔ
-    //¾ÆÀÌÅÛÀ» ¸ÔÀ» ¼öµµ ÀÖ¾î¾ß ÇÔ
+    //WASDë¡œ ì›€ì§ì¼ ìˆ˜ ìˆì–´ì•¼ í•¨
+    //ë§ˆìš°ìŠ¤ë¡œ í”Œë ˆì´ì–´ë¥¼ íšŒì „í•  ìˆ˜ ìˆê²Œ í•´ì•¼ í•¨
+    //ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ ëˆ„ë¥´ë©´,
+    //ì´ì—ì„œ ì´ì•Œì´ ë‚˜ê°€ì•¼ í•¨
+    //ë°ë¯¸ì§€ ë°›ëŠ” ê¸°ëŠ¥ë„ í•„ìš”í•¨
+    //ì•„ì´í…œì„ ë¨¹ì„ ìˆ˜ë„ ìˆì–´ì•¼ í•¨
 
     //Enemy
-    //ÇÃ·¹ÀÌ¾î¸¦ ÂÑ¾Æ ¿Í¾ßÇÔ
-    //ÀÏÁ¤ °Å¸® ¾È¿¡ ¿À¸é, Player¸¦ °ø°İÇØ¾ß ÇÔ
-    //µ¥¹ÌÁö¸¦ ¹ŞÀ» ¼ö ÀÖ¾î¾ß ÇÔ
-    //Á×À»¶§, °ÔÀÓ Á¡¼ö¸¦ ¿Ã·ÁÁà¾ß ÇÔ
+    //í”Œë ˆì´ì–´ë¥¼ ì«“ì•„ ì™€ì•¼í•¨
+    //ì¼ì • ê±°ë¦¬ ì•ˆì— ì˜¤ë©´, Playerë¥¼ ê³µê²©í•´ì•¼ í•¨
+    //ë°ë¯¸ì§€ë¥¼ ë°›ì„ ìˆ˜ ìˆì–´ì•¼ í•¨
+    //ì£½ì„ë•Œ, ê²Œì„ ì ìˆ˜ë¥¼ ì˜¬ë ¤ì¤˜ì•¼ í•¨
 
     //HealItem
-    //ÇÊµå¿¡ ·£´ı »ı¼º
-    //ÇÃ·¹ÀÌ¾î¶û ´êÀÌ¸é, ÇÃ·¹ÀÌ¾îÇÑÅ× È¸º¹ È¿°ú¸¦
-    //ºÎ¿©ÇØ¾ß ÇÔ
+    //í•„ë“œì— ëœë¤ ìƒì„±
+    //í”Œë ˆì´ì–´ë‘ ë‹¿ì´ë©´, í”Œë ˆì´ì–´í•œí…Œ íšŒë³µ íš¨ê³¼ë¥¼
+    //ë¶€ì—¬í•´ì•¼ í•¨
 
     //Game
-    //°ÔÀÓ Å¬¸®¾î (Á¡¼ö°¡ 100ÀÌ»óÀÏ¶§)
-    //°ÔÀÓ Á¾·á (ÇÃ·¹ÀÌ¾î Á×¾úÀ»¶§)
-    //°ÔÀÓ ½ÃÀÛ 
-    //°ÔÀÓ¿¡ °ü·ÃµÈ ¸ğµç°ÍµéÀ» °ü¸®
+    //ê²Œì„ í´ë¦¬ì–´ (ì ìˆ˜ê°€ 100ì´ìƒì¼ë•Œ)
+    //ê²Œì„ ì¢…ë£Œ (í”Œë ˆì´ì–´ ì£½ì—ˆì„ë•Œ)
+    //ê²Œì„ ì‹œì‘ 
+    //ê²Œì„ì— ê´€ë ¨ëœ ëª¨ë“ ê²ƒë“¤ì„ ê´€ë¦¬
 
     //UI
-    //°ÔÀÓ½ÃÀÛ, °ÔÀÓ Á¾·á, °ÔÀÓ Å¬¸®¾î
-    //UI ¸¦ ¶ç¿öÁÖ´Â ¿ªÇÒÀ» ÇÒ°ÅÀÓ
+    //ê²Œì„ì‹œì‘, ê²Œì„ ì¢…ë£Œ, ê²Œì„ í´ë¦¬ì–´
+    //UI ë¥¼ ë„ì›Œì£¼ëŠ” ì—­í• ì„ í• ê±°ì„
 }

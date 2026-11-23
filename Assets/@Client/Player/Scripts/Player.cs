@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using UnityEngine;
 
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Input.GetMouseButtonDown(0))
         {
-            //√—¿ª πﬂªÁ
+            //Ï¥ùÏùÑ Î∞úÏÇ¨
             gun.Attack();
         }
     }
@@ -134,6 +134,16 @@ public class Player : MonoBehaviour, IDamageable
         {
             Die();
         }
+    }
+
+    public void Heal(float amount)
+    {
+        if (amount <= 0f)
+        {
+            return;
+        }
+
+        hp = Mathf.Min(hp + amount, maxHp);
     }
 
     private IEnumerator CoPlayDamagedEffect()
